@@ -1,7 +1,8 @@
 from django.http import HttpRequest
 from django.shortcuts import render
 
-from tester.forms import SettingsForm
+from document_tester.tester import test_document
+from tester.forms import SettingsForm, DocumentForm
 
 
 def index(request: HttpRequest):
@@ -16,8 +17,15 @@ def index(request: HttpRequest):
             return render(request, 'index.html', {'form': form, 'link': link})
     else:
         form = SettingsForm()
-        return render(request, 'index.html', {'form': form})
+    return render(request, 'index.html', {'form': form})
 
 
 def doctest(request: HttpRequest):
-    return render(request, 'doctest.html')
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            document = request.FILES['document']
+            test_document(document)
+    else:
+        form = DocumentForm()
+    return render(request, 'doctest.html', {'form': form})
