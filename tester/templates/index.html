@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>HELLO WORLD</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
-<main>
-aaa
-</main>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Настройка проверки документа{% endblock %}
+{% block main %}
+  {% if link %}
+    <h1>Ваша ссылка:</h1>
+    <h2><a href="{{ link }}" target="_blank">{{ link }}</a></h2>
+    <button onclick="navigator.clipboard.writeText('{{ link }}')">Скопировать ссылку</button>
+    {%endif %}
+    <h1>Настройки проверки документа</h1>
+    <form action="/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Создать ссылку">
+    </form>
+{% endblock %}
