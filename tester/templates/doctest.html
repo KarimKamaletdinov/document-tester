@@ -2,7 +2,22 @@
 {% block title %}Проверка документа{% endblock %}
 {% block main %}
   <h1>Проверка документа</h1>
-    <form action="/doctest/" method="post" enctype="multipart/form-data">
+    {% if errors != None %}
+        {% for error in errors %}
+            {% if forloop.first %}
+                <h1 class="error">В документе обнаружены ошибки</h1>
+                <ul>
+            {% endif %}
+            <li>{{ error }}</li>
+            {% if forloop.last %}
+                </ul>
+            {% endif %}
+        {% empty %}
+                <h1 class="ok">Ошибок не обнаружено</h1>
+        {% endfor %}
+        <h2>Проверить ещё документ</h2>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Загрузить">

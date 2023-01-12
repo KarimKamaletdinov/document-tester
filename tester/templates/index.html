@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Настройка проверки документа{% endblock %}
 {% block main %}
-  {% if link %}
-    <h1>Ваша ссылка:</h1>
-    <h2><a href="{{ link }}" target="_blank">{{ link }}</a></h2>
-    <button onclick="navigator.clipboard.writeText('{{ link }}')">Скопировать ссылку</button>
+    {% if link %}
+        <h1>Ваша ссылка:</h1>
+        <h2><a href="{{ link }}" target="_blank">{{ link }}</a></h2>
+        <button onclick="navigator.clipboard.writeText('{{ link }}')">Скопировать ссылку</button>
+        <h1>Создать ещё ссылку</h1>
     {%endif %}
     <h1>Настройки проверки документа</h1>
     <form action="/" method="post">

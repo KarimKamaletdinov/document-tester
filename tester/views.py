@@ -1,7 +1,7 @@
 from django.http import HttpRequest
 from django.shortcuts import render
 
-from document_tester.tester import test_document
+from tester.tester import test_document
 from tester.forms import SettingsForm, DocumentForm
 
 
@@ -25,7 +25,10 @@ def doctest(request: HttpRequest):
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             document = request.FILES['document']
-            test_document(document)
+            errors = test_document(document, request.GET['font'], int(request.GET['t']), int(request.GET['r']),
+                                   int(request.GET['b']), int(request.GET['l']))
+            print(errors)
+            return render(request, 'doctest.html', {'form': form, 'errors': errors})
     else:
         form = DocumentForm()
-    return render(request, 'doctest.html', {'form': form})
+        return render(request, 'doctest.html', {'form': form})

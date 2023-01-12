@@ -33,3 +33,11 @@ button, input[type=submit] {
     display: inline;
     font-size: 15px;
 }
+
+.ok {
+    color: green;
+}
+
+.error {
+    color: red;
+}
